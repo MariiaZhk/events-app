@@ -12,6 +12,7 @@ import { teal } from "@mui/material/colors";
 import HomePage from "./pages/HomePage";
 import { Suspense } from "react";
 import { Header } from "./components/Header";
+import SharedLayout from "./components/SharedLayout";
 
 const App = () => {
   const defaultTheme = createTheme({
@@ -27,20 +28,20 @@ const App = () => {
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
-      <Header />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route
-          path="/events"
-          element={
-            <Suspense fallback={<LinearProgress sx={{ mt: 1 }} />}>
-              {" "}
-              <EventsBoardPage />
-            </Suspense>
-          }
-        />
-        <Route path="/registration" element={<EventRegistrationPage />} />
-        <Route path="/participants" element={<EventParticipantsPage />} />
+        <Route element={<SharedLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/events"
+            element={
+              <Suspense fallback={<LinearProgress sx={{ mt: 1 }} />}>
+                <EventsBoardPage />
+              </Suspense>
+            }
+          />
+          <Route path="/:id/registration" element={<EventRegistrationPage />} />
+          <Route path="/:id/participants" element={<EventParticipantsPage />} />
+        </Route>
       </Routes>
     </ThemeProvider>
   );

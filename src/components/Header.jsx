@@ -7,15 +7,16 @@ export function Header() {
     <AppBar position="static">
       <Toolbar>
         <Diversity3Icon sx={{ mr: 2 }} />
-        <Typography variant="h6" color="inherit" noWrap sx={{ mr: 2 }}>
-          EvENTER
-        </Typography>
+        <HeaderLink to="/">
+          <Typography variant="h6" color="inherit" noWrap>
+            EvENTER
+          </Typography>
+        </HeaderLink>
         <Box sx={{ flexGrow: 1 }}>
           <nav>
-            <HeaderLink to="/">Home</HeaderLink>
             <HeaderLink to="/events">EVENTS</HeaderLink>
-            <HeaderLink to="/registration">REGISTRATION</HeaderLink>
-            <HeaderLink to="/participants">Participants</HeaderLink>
+            {/* <HeaderLink to="/registration">REGISTRATION</HeaderLink>
+            <HeaderLink to="/participants">Participants</HeaderLink> */}
           </nav>
         </Box>
       </Toolbar>
@@ -30,7 +31,7 @@ function HeaderLink({ to, children }) {
       to={to}
       variant="button"
       color="inherit"
-      sx={{ my: 1, mx: 1.5 }}
+      sx={{ my: 1, mx: 1.5, textDecoration: "none" }}
     >
       {children}
     </Link>

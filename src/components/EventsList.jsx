@@ -1,34 +1,49 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useEffect } from "react";
 import { Container, Typography, LinearProgress } from "@mui/material";
-import EventItem from "./EventItem";
 import Grid from "@mui/material/Grid2";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectAllEvents,
+  selectError,
+  selectIsLoading,
+} from "../redux/selectors";
+import { fetchAllEvents } from "../redux/operations";
+import EventItem from "./EventItem";
 
 function EventsList() {
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const events = useSelector(selectAllEvents);
+  const isLoading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchEvents = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/");
-        setEvents(response.data.events);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching events:", error);
-        setLoading(false);
-      }
-    };
+    dispatch(fetchAllEvents());
+  }, [dispatch]);
 
-    fetchEvents();
-  }, []);
-
-  if (loading) {
+  if (isLoading) {
     return <LinearProgress color="secondary" />;
+  }
+  if (error) {
+    return <Typography color="error">Error: {error}</Typography>;
   }
 
   return (
     <Container maxWidth="lg">
+      <Typography
+        mb={4}
+        variant="h4"
+        gutterBottom
+        sx={{
+          textAlign: "center",
+          textTransform: "uppercase",
+          fontWeight: "500",
+        }}
+      >
+        {" "}
+        Upcoming Events
+      </Typography>
+
       {events.length === 0 ? (
         <Typography variant="h6">No events available</Typography>
       ) : (

@@ -1,5 +1,7 @@
+import ParticipantsList from "../components/ParticipantsList";
+
 function EventParticipantsPage() {
-  return <></>;
+  return <ParticipantsList />;
 }
 
 export default EventParticipantsPage;

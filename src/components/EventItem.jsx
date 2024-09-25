@@ -33,11 +33,25 @@ function EventItem({ id, title, description, eventDate, organizer }) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button component={RouterLink} to={`/events/${id}`} color="secondary">
+        <Button
+          component={RouterLink}
+          to={`/${id}/registration`}
+          color="secondary"
+          sx={{
+            fontSize: "1rem",
+          }}
+        >
           Register
         </Button>
-        <Button component={RouterLink} to={`/register/${id}`} color="secondary">
-          Details
+        <Button
+          component={RouterLink}
+          to={`/${id}/participants`}
+          color="secondary"
+          sx={{
+            fontSize: "1rem",
+          }}
+        >
+          View
         </Button>
       </CardActions>
     </Card>
