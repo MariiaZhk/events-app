@@ -38,20 +38,3 @@ export const addParticipant = createAsyncThunk(
     }
   }
 );
-
-// export const fetchParticipantsByEventId = createAsyncThunk(
-//   "participants/fetchAllParticipants",
-//   async (eventId, thunkAPI) => {
-//     try {
-//       const response = await api.get(`/events/${eventId}/participants`);
-//       if (response.status !== 200) {
-//         return thunkAPI.rejectWithValue("Failed to fetch participants");
-//       }
-//       return response.data;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(
-//         error.response?.data?.message || "Something went wrong"
-//       );
-//     }
-//   }
-// );

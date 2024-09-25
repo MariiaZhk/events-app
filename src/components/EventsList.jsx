@@ -1,5 +1,11 @@
-import { useEffect } from "react";
-import { Container, Typography, LinearProgress } from "@mui/material";
+import { useEffect, useState } from "react";
+import {
+  Container,
+  Typography,
+  LinearProgress,
+  Pagination,
+  Box,
+} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -16,10 +22,21 @@ function EventsList() {
   const error = useSelector(selectError);
 
   const dispatch = useDispatch();
+  const [currentPage, setCurrentPage] = useState(1);
+  const eventsPerPage = 4;
+
+  const totalPages = Math.ceil(events.length / eventsPerPage);
+  const indexOfLastEvent = currentPage * eventsPerPage;
+  const indexOfFirstEvent = indexOfLastEvent - eventsPerPage;
+  const currentEvents = events.slice(indexOfFirstEvent, indexOfLastEvent);
 
   useEffect(() => {
     dispatch(fetchAllEvents());
   }, [dispatch]);
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
 
   if (isLoading) {
     return <LinearProgress color="secondary" />;
@@ -40,26 +57,35 @@ function EventsList() {
           fontWeight: "500",
         }}
       >
-        {" "}
         Upcoming Events
       </Typography>
 
-      {events.length === 0 ? (
+      {currentEvents.length === 0 ? (
         <Typography variant="h6">No events available</Typography>
       ) : (
-        <Grid container spacing={4}>
-          {events.map((event) => (
-            <Grid key={event._id} size={{ xs: 12, sm: 6 }}>
-              <EventItem
-                id={event._id}
-                title={event.title}
-                description={event.description}
-                eventDate={event.eventDate}
-                organizer={event.organizer}
-              />
-            </Grid>
-          ))}
-        </Grid>
+        <>
+          <Grid container spacing={4}>
+            {currentEvents.map((event) => (
+              <Grid key={event._id} size={{ xs: 12, sm: 6 }}>
+                <EventItem
+                  id={event._id}
+                  title={event.title}
+                  description={event.description}
+                  eventDate={event.eventDate}
+                  organizer={event.organizer}
+                />
+              </Grid>
+            ))}
+          </Grid>
+          <Box sx={{ display: "flex", justifyContent: "center", mt: 6 }}>
+            <Pagination
+              count={totalPages}
+              page={currentPage}
+              onChange={handlePageChange}
+              color="primary"
+            />
+          </Box>
+        </>
       )}
     </Container>
   );

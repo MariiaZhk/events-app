@@ -50,7 +50,7 @@ const EventRegistrationForm = () => {
   };
 
   return (
-    <Container>
+    <Container maxWidth="md">
       <Typography
         variant="h4"
         gutterBottom
@@ -60,19 +60,24 @@ const EventRegistrationForm = () => {
           fontWeight: "500",
         }}
       >
-        Event Registration Form
+        Registration Form
       </Typography>
 
-      <form onSubmit={handleSubmit}>
-        <TextField
-          required
-          fullWidth
-          label="Event Title"
-          name="eventTitle"
-          value={event.title}
-          margin="normal"
-          disabled
-        />
+      <form
+        onSubmit={handleSubmit}
+        style={{ maxWidth: "600px", margin: "0 auto" }}
+      >
+        <Typography
+          variant="h5"
+          gutterBottom
+          sx={{
+            textAlign: "center",
+            margin: "normal",
+          }}
+        >
+          Event Title: {event.title}
+        </Typography>
+
         <TextField
           required
           fullWidth

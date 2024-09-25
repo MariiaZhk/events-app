@@ -1,5 +1,6 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
+import Copyright from "../components/Copyright";
 
 export default function HomePage() {
   return (
@@ -45,6 +46,19 @@ export default function HomePage() {
           Explore
         </Button>
       </Stack>
+      <Box
+        component="footer"
+        sx={{
+          borderTop: (theme) => `1px solid ${theme.palette.divider}`,
+          py: 4,
+          mt: "auto",
+          position: "fixed",
+          width: "100%",
+          bottom: 0,
+        }}
+      >
+        <Copyright />
+      </Box>
     </Box>
   );
 }
