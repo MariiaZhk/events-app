@@ -45,7 +45,7 @@ The **Events Registration App** is a web-based application designed to streamlin
 - **Database**: MongoDB (NoSQL)
 - **State Management**: Redux
 
-## Project Link
+## Project Links
 
 - WebPage:
   [https://mariiazhk.github.io/events-app](https://mariiazhk.github.io/events-app)
