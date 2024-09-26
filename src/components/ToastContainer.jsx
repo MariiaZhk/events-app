@@ -5,10 +5,6 @@ import { useTheme } from "@mui/material/styles";
 const ToastContainer = () => {
   const theme = useTheme();
 
-  const customToastContent = (message) => (
-    <div style={{ color: theme.palette.secondary }}>{message}</div>
-  );
-
   return (
     <ReactToastContainer
       position="top-right"
@@ -18,10 +14,9 @@ const ToastContainer = () => {
       pauseOnFocusLoss={true}
       draggable={true}
       pauseOnHover={true}
-      render={(message) => customToastContent(message)}
       toastStyle={{
-        background: theme.palette.secondary,
-        color: theme.palette.secondary,
+        background: theme.palette.background.default,
+        color: theme.palette.secondary.main,
         width: "auto",
         maxWidth: "500px",
         fontSize: "16px",

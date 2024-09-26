@@ -27,7 +27,7 @@ function EventsList() {
 
   const dispatch = useDispatch();
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortOption, setSortOption] = useState("title");
+  const [sortOption, setSortOption] = useState("titleAsc");
   const eventsPerPage = 4;
 
   useEffect(() => {
@@ -52,12 +52,18 @@ function EventsList() {
 
   const sortedEvents = [...events].sort((a, b) => {
     switch (sortOption) {
-      case "title":
+      case "titleAsc":
         return a.title.localeCompare(b.title);
-      case "eventDate":
+      case "titleDesc":
+        return b.title.localeCompare(a.title);
+      case "eventDateAsc":
+        return new Date(a.eventDate) - new Date(b.eventDate);
+      case "eventDateDesc":
         return new Date(b.eventDate) - new Date(a.eventDate);
-      case "organizer":
+      case "organizerAsc":
         return a.organizer.localeCompare(b.organizer);
+      case "organizerDesc":
+        return b.organizer.localeCompare(a.organizer);
       default:
         return 0;
     }
@@ -112,11 +118,16 @@ function EventsList() {
               onChange={handleSortChange}
               label="Sort By"
             >
-              <MenuItem value="title">Title A to Z</MenuItem>
-              <MenuItem value="eventDate">
+              <MenuItem value="titleAsc">Title A to Z</MenuItem>
+              <MenuItem value="titleDesc">Title Z to A</MenuItem>
+              <MenuItem value="eventDateDesc">
                 Event Date (Latest to Earliest)
               </MenuItem>
-              <MenuItem value="organizer">Organizer A to Z</MenuItem>
+              <MenuItem value="eventDateAsc">
+                Event Date (Earliest to Latest)
+              </MenuItem>
+              <MenuItem value="organizerAsc">Organizer A to Z</MenuItem>
+              <MenuItem value="organizerDesc">Organizer Z to A</MenuItem>
             </Select>
           </FormControl>
         </Box>
