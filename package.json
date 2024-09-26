@@ -2,7 +2,7 @@
   "name": "events-app",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://mariiazhk.github.io/events-app",
+  "homepage": "https://mariiazhk.github.io/events-app/",
   "type": "module",
   "scripts": {
     "dev": "vite",
