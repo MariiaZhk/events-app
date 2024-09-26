@@ -54,9 +54,8 @@ const ParticipantsList = () => {
   );
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+    <Box sx={{ display: "flex", flexDirection: "column" }}>
       <Container
-        maxWidth="lg"
         sx={{
           flexGrow: 1,
           display: "flex",
@@ -107,7 +106,7 @@ const ParticipantsList = () => {
           </Box>
         )}
 
-        <Box sx={{ flexGrow: 1 }} mt={4}>
+        <Box sx={{ flexGrow: 1, mt: 4, minHeight: "400px" }}>
           {participants.length === 0 ? (
             <Box sx={{ textAlign: "center" }}>
               <Typography variant="h6" sx={{ textAlign: "center" }}>
@@ -153,7 +152,15 @@ const ParticipantsList = () => {
       </Container>
 
       {totalPages > 1 && currentParticipants.length > 0 && (
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 6, pb: 3 }}>
+        <Box
+          sx={{
+            py: 2,
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            mt: 4,
+          }}
+        >
           <Pagination
             count={totalPages}
             page={currentPage}

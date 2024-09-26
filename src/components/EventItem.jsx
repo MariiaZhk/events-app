@@ -22,13 +22,13 @@ function EventItem({ id, title, description, eventDate, organizer }) {
         <Typography variant="h4" gutterBottom>
           {title}
         </Typography>
-        <Typography variant="h6" display="block" mt={1} mb={1}>
+        <Typography variant="body" display="block" mt={1} mb={1}>
           <strong>Date:</strong> {new Date(eventDate).toLocaleDateString()}
         </Typography>
-        <Typography variant="h6" display="block" mt={1} mb={1}>
+        <Typography variant="body" display="block" mt={1} mb={1}>
           <strong>Organizer:</strong> {organizer}
         </Typography>
-        <Typography variant="body" color="text.secondary">
+        <Typography variant="body2" color="text.secondary">
           {description}
         </Typography>
       </CardContent>

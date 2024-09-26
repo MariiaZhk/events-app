@@ -4,7 +4,7 @@ import { Header } from "./Header";
 
 export default function SharedLayout() {
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <Box sx={{ width: "100%" }}>
         <Header />
       </Box>
@@ -19,8 +19,8 @@ export default function SharedLayout() {
         <Box
           sx={{
             flexGrow: 1,
-            pt: 8,
-            pb: 8,
+            pt: 6,
+            pb: 6,
           }}
         >
           <Outlet />

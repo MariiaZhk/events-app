@@ -86,15 +86,14 @@ function EventsList() {
       sx={{
         display: "flex",
         flexDirection: "column",
-        minHeight: "100vh",
       }}
     >
       <Container
         maxWidth="lg"
         sx={{
-          flexGrow: 1,
           display: "flex",
           flexDirection: "column",
+          flexGrow: 1,
         }}
       >
         <Typography
@@ -132,13 +131,23 @@ function EventsList() {
           </FormControl>
         </Box>
 
-        <Box sx={{ flexGrow: 1 }}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: currentEvents.length > 0 ? "flex-start" : "center",
+            minHeight: "500px",
+          }}
+        >
           {currentEvents.length === 0 ? (
-            <Typography variant="h6">No events available</Typography>
+            <Typography variant="h6" align="center">
+              No events available
+            </Typography>
           ) : (
             <Grid container spacing={3}>
               {currentEvents.map((event) => (
-                <Grid key={event._id} size={{ xs: 12, sm: 6 }}>
+                <Grid key={event._id} size={{ xs: 12, sm: 6, md: 6, lg: 6 }}>
                   <EventItem
                     id={event._id}
                     title={event.title}
@@ -156,12 +165,11 @@ function EventsList() {
       {totalPages > 1 && (
         <Box
           sx={{
+            py: 2,
+            width: "100%",
             display: "flex",
             justifyContent: "center",
-            mt: 1,
-            py: 2,
-            position: "sticky",
-            bottom: 0,
+            mt: 4,
           }}
         >
           <Pagination
