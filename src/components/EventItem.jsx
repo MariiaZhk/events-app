@@ -1,4 +1,5 @@
 import { Link as RouterLink } from "react-router-dom";
+import { memo } from "react";
 import {
   Button,
   Card,
@@ -6,7 +7,6 @@ import {
   CardContent,
   Typography,
 } from "@mui/material";
-import { memo } from "react";
 
 function EventItem({ id, title, description, eventDate, organizer }) {
   return (

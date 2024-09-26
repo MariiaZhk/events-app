@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registrationSchema } from "../utils/schemas";
+import { useState } from "react";
 import {
   Button,
   TextField,
@@ -21,7 +22,6 @@ import {
   FormControl,
   Box,
 } from "@mui/material";
-import { useState } from "react";
 
 const EventRegistrationForm = () => {
   const { id } = useParams();
@@ -130,7 +130,7 @@ const EventRegistrationForm = () => {
           )}
         </div>
 
-        <div style={{ position: "relative", marginBottom: "40px" }}>
+        <div style={{ position: "relative", marginBottom: "30px" }}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker
               label="Date of Birth"

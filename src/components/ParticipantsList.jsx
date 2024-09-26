@@ -1,4 +1,8 @@
 import { useSelector } from "react-redux";
+import Grid from "@mui/material/Grid2";
+import ParticipantItem from "./ParticipantsItem";
+import { useState } from "react";
+import Pagination from "@mui/material/Pagination";
 import {
   selectEventById,
   selectParticipantsByEventId,
@@ -12,10 +16,6 @@ import {
   Stack,
   TextField,
 } from "@mui/material";
-import Grid from "@mui/material/Grid2";
-import ParticipantItem from "./ParticipantsItem";
-import { useState } from "react";
-import Pagination from "@mui/material/Pagination";
 
 const ParticipantsList = () => {
   const { id } = useParams();

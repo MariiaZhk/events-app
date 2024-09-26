@@ -12,6 +12,7 @@ import { teal } from "@mui/material/colors";
 import HomePage from "./pages/HomePage";
 import { Suspense } from "react";
 import SharedLayout from "./components/SharedLayout";
+import ErrorPage from "./pages/ErrorPage";
 
 const App = () => {
   const defaultTheme = createTheme({
@@ -40,6 +41,7 @@ const App = () => {
           />
           <Route path="/:id/registration" element={<EventRegistrationPage />} />
           <Route path="/:id/participants" element={<EventParticipantsPage />} />
+          <Route path="*" element={<ErrorPage />} />
         </Route>
       </Routes>
     </ThemeProvider>

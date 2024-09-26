@@ -1,4 +1,12 @@
 import { useEffect, useState } from "react";
+import { fetchAllEvents } from "../redux/operations";
+import EventItem from "../components/EventItem";
+import Grid from "@mui/material/Grid2";
+import {
+  selectAllEvents,
+  selectError,
+  selectIsLoading,
+} from "../redux/selectors";
 import {
   Container,
   Typography,
@@ -10,15 +18,7 @@ import {
   FormControl,
   InputLabel,
 } from "@mui/material";
-import Grid from "@mui/material/Grid2";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectAllEvents,
-  selectError,
-  selectIsLoading,
-} from "../redux/selectors";
-import { fetchAllEvents } from "../redux/operations";
-import EventItem from "../components/EventItem";
 
 function EventsList() {
   const events = useSelector(selectAllEvents);
