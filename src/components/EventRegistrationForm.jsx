@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectEventById } from "../redux/selectors";
 import { addParticipant } from "../redux/operations";
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
 
 const EventRegistrationForm = () => {
   const { id } = useParams();
@@ -58,10 +59,12 @@ const EventRegistrationForm = () => {
       })
     )
       .then(() => {
+        toast.success("Registration successful!");
         setFormData(initialFormState);
       })
       .catch((error) => {
         console.error("Error adding participant:", error);
+        toast.error("Error adding participant.");
       });
   };
 

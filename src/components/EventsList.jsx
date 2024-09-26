@@ -47,6 +47,7 @@ function EventsList() {
 
   const handleSortChange = (event) => {
     setSortOption(event.target.value);
+    setCurrentPage(1);
   };
 
   const sortedEvents = [...events].sort((a, b) => {
