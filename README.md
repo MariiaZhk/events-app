@@ -48,8 +48,8 @@ The **Events Registration App** is a web-based application designed to streamlin
 ## Project Link
 
 - WebPage:
-  [https://beekeepers-seven.vercel.app](https://mariiazhk.github.io/events-app/)
+  [https://mariiazhk.github.io/events-app](https://mariiazhk.github.io/events-app)
 - Frontend:
-  [https://github.com/IamLoren/Beekeepers](https://github.com/MariiaZhk/events-app)
+  [https://github.com/MariiaZhk/events-app](https://github.com/MariiaZhk/events-app)
 - Backend:
-  [https://github.com/IamLoren/Beekeepers-back](https://github.com/MariiaZhk/events-app-backend)
+  [https://github.com/MariiaZhk/events-app-backend](https://github.com/MariiaZhk/events-app-backend)
