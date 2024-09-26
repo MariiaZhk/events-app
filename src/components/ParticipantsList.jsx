@@ -4,7 +4,14 @@ import {
   selectParticipantsByEventId,
 } from "../redux/selectors";
 import { useParams, Link as RouterLink } from "react-router-dom";
-import { Container, Typography, Button, Box, Stack } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Button,
+  Box,
+  Stack,
+  TextField,
+} from "@mui/material";
 import Grid from "@mui/material/Grid2";
 import ParticipantItem from "./ParticipantsItem";
 import { useState } from "react";
@@ -17,86 +24,145 @@ const ParticipantsList = () => {
     selectParticipantsByEventId(state, id)
   );
 
-  // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const participantsPerPage = 9; // Adjust this to your needs
-
-  const totalPages = Math.ceil(participants.length / participantsPerPage);
-  const indexOfLastParticipant = currentPage * participantsPerPage;
-  const indexOfFirstParticipant = indexOfLastParticipant - participantsPerPage;
-  const currentParticipants = participants.slice(
-    indexOfFirstParticipant,
-    indexOfLastParticipant
-  );
+  const [searchQuery, setSearchQuery] = useState("");
+  const participantsPerPage = 9;
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
   };
 
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+    setCurrentPage(1);
+  };
+
+  const filteredParticipants = participants.filter(
+    (participant) =>
+      participant.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      participant.email.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const totalPages = Math.ceil(
+    filteredParticipants.length / participantsPerPage
+  );
+  const indexOfLastParticipant = currentPage * participantsPerPage;
+  const indexOfFirstParticipant = indexOfLastParticipant - participantsPerPage;
+  const currentParticipants = filteredParticipants.slice(
+    indexOfFirstParticipant,
+    indexOfLastParticipant
+  );
+
   return (
-    <Container maxWidth="lg">
-      <Typography
-        mb={4}
-        variant="h4"
-        gutterBottom
+    <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      <Container
+        maxWidth="lg"
         sx={{
-          textAlign: "center",
-          textTransform: "uppercase",
-          fontWeight: "500",
+          flexGrow: 1,
+          display: "flex",
+          flexDirection: "column",
         }}
       >
-        {event.title} Participants
-      </Typography>
+        <Typography
+          variant="h4"
+          gutterBottom
+          sx={{
+            textAlign: "center",
+            textTransform: "uppercase",
+            fontWeight: "500",
+          }}
+        >
+          Registered Participants
+        </Typography>
+        <Typography
+          variant="h5"
+          gutterBottom
+          sx={{
+            textAlign: "center",
+            margin: "normal",
+          }}
+        >
+          Event Title: {event.title}
+        </Typography>
 
-      {currentParticipants.length === 0 ? (
-        <Box sx={{ textAlign: "center" }}>
-          <Typography variant="h6" sx={{ textAlign: "center" }}>
-            No participants are registered yet, which means you can be the very
-            first to join this event!
-          </Typography>
-          <Stack
-            sx={{ mt: 8 }}
-            direction="row"
-            spacing={10}
-            justifyContent="center"
+        {participants.length > 0 && (
+          <Box
+            sx={{
+              my: 3,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              marginX: "auto",
+              minWidth: 400,
+            }}
           >
-            <Button
-              sx={{
-                fontSize: "1.3rem",
-              }}
-              component={RouterLink}
-              to={`/${id}/registration`}
-              variant="contained"
-              color="secondary"
-            >
-              Register
-            </Button>
-          </Stack>
-        </Box>
-      ) : (
-        <>
-          <Grid container spacing={4}>
-            {currentParticipants.map((participant) => (
-              <Grid key={participant._id} size={{ xs: 12, md: 4, sm: 6 }}>
-                <ParticipantItem
-                  id={participant._id}
-                  name={participant.fullName}
-                  email={participant.email}
-                />
-              </Grid>
-            ))}
-          </Grid>
-          <Box sx={{ display: "flex", justifyContent: "center", mt: 6 }}>
-            <Pagination
-              count={totalPages}
-              page={currentPage}
-              onChange={handlePageChange}
-              color="primary"
+            <TextField
+              label="Search Participants"
+              variant="outlined"
+              fullWidth
+              value={searchQuery}
+              onChange={handleSearchChange}
+              placeholder="Search by name or email"
             />
           </Box>
-        </>
+        )}
+
+        <Box sx={{ flexGrow: 1 }} mt={4}>
+          {participants.length === 0 ? (
+            <Box sx={{ textAlign: "center" }}>
+              <Typography variant="h6" sx={{ textAlign: "center" }}>
+                No participants yet. Lead the way by registering first!
+              </Typography>
+              <Stack
+                sx={{ mt: 8 }}
+                direction="row"
+                spacing={10}
+                justifyContent="center"
+              >
+                <Button
+                  sx={{
+                    fontSize: "1.3rem",
+                  }}
+                  component={RouterLink}
+                  to={`/${id}/registration`}
+                  variant="contained"
+                  color="secondary"
+                >
+                  Register
+                </Button>
+              </Stack>
+            </Box>
+          ) : currentParticipants.length === 0 ? (
+            <Typography variant="h6" sx={{ textAlign: "center" }}>
+              No participants match your search.
+            </Typography>
+          ) : (
+            <Grid container spacing={4}>
+              {currentParticipants.map((participant) => (
+                <Grid key={participant._id} size={{ xs: 12, md: 4, sm: 6 }}>
+                  <ParticipantItem
+                    id={participant._id}
+                    name={participant.fullName}
+                    email={participant.email}
+                  />
+                </Grid>
+              ))}
+            </Grid>
+          )}
+        </Box>
+      </Container>
+
+      {totalPages > 1 && currentParticipants.length > 0 && (
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 6, pb: 3 }}>
+          <Pagination
+            count={totalPages}
+            page={currentPage}
+            onChange={handlePageChange}
+            color="primary"
+          />
+        </Box>
       )}
-    </Container>
+    </Box>
   );
 };
 

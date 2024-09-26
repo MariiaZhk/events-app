@@ -11,7 +11,6 @@ import {
 import { teal } from "@mui/material/colors";
 import HomePage from "./pages/HomePage";
 import { Suspense } from "react";
-import { Header } from "./components/Header";
 import SharedLayout from "./components/SharedLayout";
 
 const App = () => {

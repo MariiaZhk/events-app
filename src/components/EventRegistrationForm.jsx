@@ -11,28 +11,40 @@ import {
   FormControl,
   Box,
 } from "@mui/material";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectEventById } from "../redux/selectors";
 import { addParticipant } from "../redux/operations";
+import dayjs from "dayjs";
 
 const EventRegistrationForm = () => {
   const { id } = useParams();
   const event = useSelector((state) => selectEventById(state, id));
   const dispatch = useDispatch();
 
-  const [formData, setFormData] = useState({
+  const initialFormState = {
     fullName: "",
     email: "",
-    dateOfBirth: "",
+    dateOfBirth: null,
     heardFrom: "",
-  });
+  };
+
+  const [formData, setFormData] = useState(initialFormState);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
+    }));
+  };
+
+  const handleDateChange = (date) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      dateOfBirth: date ? date.format("MM-DD-YYYY") : "",
     }));
   };
 
@@ -44,9 +56,13 @@ const EventRegistrationForm = () => {
         eventId: id,
         ...formData,
       })
-    ).catch((error) => {
-      console.error("Error adding participant:", error);
-    });
+    )
+      .then(() => {
+        setFormData(initialFormState);
+      })
+      .catch((error) => {
+        console.error("Error adding participant:", error);
+      });
   };
 
   return (
@@ -97,17 +113,21 @@ const EventRegistrationForm = () => {
           onChange={handleChange}
           margin="normal"
         />
-        <TextField
-          required
-          fullWidth
-          label="Date of Birth"
-          name="dateOfBirth"
-          type="date"
-          value={formData.dateOfBirth}
-          onChange={handleChange}
-          margin="normal"
-          slotProps={{ inputLabel: { shrink: true } }}
-        />
+
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            label="Date of Birth"
+            value={formData.dateOfBirth ? dayjs(formData.dateOfBirth) : null}
+            onChange={handleDateChange}
+            slotProps={{
+              textField: {
+                fullWidth: true,
+                required: true,
+              },
+            }}
+          />
+        </LocalizationProvider>
+
         <FormControl component="fieldset" margin="normal">
           <FormLabel id="row-radio-group-label" component="legend">
             Where did you hear about this event?
@@ -120,17 +140,17 @@ const EventRegistrationForm = () => {
           >
             <FormControlLabel
               value="social media"
-              control={<Radio />}
+              control={<Radio required />}
               label="Social Media"
             />
             <FormControlLabel
               value="friends"
-              control={<Radio />}
+              control={<Radio required />}
               label="Friend"
             />
             <FormControlLabel
               value="myself"
-              control={<Radio />}
+              control={<Radio required />}
               label="Found Myself"
             />
           </RadioGroup>

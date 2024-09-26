@@ -15,8 +15,6 @@ export function Header() {
         <Box sx={{ flexGrow: 1 }}>
           <nav>
             <HeaderLink to="/events">EVENTS</HeaderLink>
-            {/* <HeaderLink to="/registration">REGISTRATION</HeaderLink>
-            <HeaderLink to="/participants">Participants</HeaderLink> */}
           </nav>
         </Box>
       </Toolbar>

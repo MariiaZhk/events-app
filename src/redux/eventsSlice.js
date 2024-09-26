@@ -57,17 +57,6 @@ const eventsSlice = createSlice({
         state.isLoading = false;
         state.error = error.message;
       });
-    // .addCase(fetchAllParticipants.pending, (state) => {
-    //   state.isLoading = true;
-    // })
-    // .addCase(fetchAllParticipants.fulfilled, (state, { payload }) => {
-    //   state.participants = payload;
-    //   state.isLoading = false;
-    // })
-    // .addCase(fetchAllParticipants.rejected, (state, { error }) => {
-    //   state.isLoading = false;
-    //   state.error = error.message;
-    // });
   },
 });
 

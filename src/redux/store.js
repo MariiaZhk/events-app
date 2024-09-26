@@ -20,23 +20,14 @@ const eventsPersistConfig = {
   whitelist: ["events"],
 };
 
-// const globalPersistConfig = {
-//   key: "global",
-//   storage,
-//   whitelist: [],
-// };
-
 const persistedEventsReducer = persistReducer(
   eventsPersistConfig,
   eventsReducer
 );
 
-// const persistedGlobalReducer = persistReducer(globalReducer);
-
 export const store = configureStore({
   reducer: {
     eventsSlice: persistedEventsReducer,
-    //   globalSlice: persistedGlobalReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

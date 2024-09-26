@@ -19,8 +19,8 @@ export default function SharedLayout() {
         <Box
           sx={{
             flexGrow: 1,
-            pt: 10,
-            pb: 10,
+            pt: 8,
+            pb: 8,
           }}
         >
           <Outlet />
