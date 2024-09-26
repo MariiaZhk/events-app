@@ -14,7 +14,7 @@ import ToastContainer from "./components/ToastContainer";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/events-app/">
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <App />
