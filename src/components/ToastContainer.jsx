@@ -15,19 +15,19 @@ const ToastContainer = () => {
       draggable={true}
       pauseOnHover={true}
       toastStyle={{
-        background: theme.palette.background.default,
+        background: theme.palette.primary.main,
         color: theme.palette.secondary.main,
         width: "auto",
-        maxWidth: "500px",
+        minWidth: "600px",
         fontSize: "16px",
         fontWeight: "600",
-        borderRadius: "30px",
-        border: `4px solid ${theme.palette.secondary}`,
+        borderRadius: "10px",
+        border: `4px solid ${theme.palette.primary.main}`,
         padding: "10px",
         wordWrap: "break-word",
         whiteSpace: "pre-wrap",
       }}
-      progressStyle={{ background: theme.palette.secondary }}
+      progressStyle={{ background: theme.palette.secondary.main }}
       icon={false}
       limit={1}
     />

@@ -1,4 +1,14 @@
-import { useState } from "react";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectEventById } from "../redux/selectors";
+import { addParticipant } from "../redux/operations";
+import dayjs from "dayjs";
+import { toast } from "react-toastify";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { registrationSchema } from "../utils/schemas";
 import {
   Button,
   TextField,
@@ -11,56 +21,47 @@ import {
   FormControl,
   Box,
 } from "@mui/material";
-import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { selectEventById } from "../redux/selectors";
-import { addParticipant } from "../redux/operations";
-import dayjs from "dayjs";
-import { toast } from "react-toastify";
+import { useState } from "react";
 
 const EventRegistrationForm = () => {
   const { id } = useParams();
   const event = useSelector((state) => selectEventById(state, id));
   const dispatch = useDispatch();
+  const [birthDate, setBirthDate] = useState(null);
 
-  const initialFormState = {
-    fullName: "",
-    email: "",
-    dateOfBirth: null,
-    heardFrom: "",
-  };
-
-  const [formData, setFormData] = useState(initialFormState);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
-  };
+  const {
+    handleSubmit,
+    register,
+    setValue,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(registrationSchema),
+  });
 
   const handleDateChange = (date) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      dateOfBirth: date ? date.format("MM-DD-YYYY") : "",
-    }));
+    if (date) {
+      setBirthDate(date);
+      setValue("dateOfBirth", date.format("MM-DD-YYYY"), {
+        shouldValidate: true,
+      });
+    } else {
+      setBirthDate(null);
+      setValue("dateOfBirth", "");
+    }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const onSubmit = (data) => {
     dispatch(
       addParticipant({
         eventId: id,
-        ...formData,
+        ...data,
       })
     )
       .then(() => {
         toast.success("Registration successful!");
-        setFormData(initialFormState);
+        reset();
+        setBirthDate(null);
       })
       .catch((error) => {
         console.error("Error adding participant:", error);
@@ -83,80 +84,120 @@ const EventRegistrationForm = () => {
       </Typography>
 
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         style={{ maxWidth: "600px", margin: "0 auto" }}
       >
-        <Typography
-          variant="h5"
-          gutterBottom
-          sx={{
-            textAlign: "center",
-            margin: "normal",
-          }}
-        >
+        <Typography variant="h5" gutterBottom sx={{ textAlign: "center" }}>
           Event Title: {event.title}
         </Typography>
 
-        <TextField
-          required
-          fullWidth
-          label="Full Name"
-          name="fullName"
-          value={formData.fullName}
-          onChange={handleChange}
-          margin="normal"
-        />
-        <TextField
-          required
-          fullWidth
-          label="Email"
-          name="email"
-          type="email"
-          value={formData.email}
-          onChange={handleChange}
-          margin="normal"
-        />
+        <div style={{ position: "relative", marginBottom: "30px" }}>
+          <TextField fullWidth label="Full Name" {...register("fullName")} />
+          {errors.fullName && (
+            <Typography
+              variant="caption"
+              color="error"
+              sx={{
+                position: "absolute",
+                bottom: "-18px",
+                left: 0,
+              }}
+            >
+              {errors.fullName.message}
+            </Typography>
+          )}
+        </div>
 
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker
-            label="Date of Birth"
-            value={formData.dateOfBirth ? dayjs(formData.dateOfBirth) : null}
-            onChange={handleDateChange}
-            slotProps={{
-              textField: {
-                fullWidth: true,
-                required: true,
-              },
-            }}
+        <div style={{ position: "relative", marginBottom: "30px" }}>
+          <TextField
+            fullWidth
+            label="Email"
+            type="email"
+            {...register("email")}
           />
-        </LocalizationProvider>
+          {errors.email && (
+            <Typography
+              variant="caption"
+              color="error"
+              sx={{
+                position: "absolute",
+                bottom: "-18px",
+                left: 0,
+              }}
+            >
+              {errors.email.message}
+            </Typography>
+          )}
+        </div>
 
-        <FormControl component="fieldset" margin="normal">
-          <FormLabel id="row-radio-group-label" component="legend">
+        <div style={{ position: "relative", marginBottom: "40px" }}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker
+              label="Date of Birth"
+              value={birthDate}
+              onChange={handleDateChange}
+              maxDate={dayjs()}
+              slotProps={{
+                textField: {
+                  fullWidth: true,
+                },
+              }}
+            />
+          </LocalizationProvider>
+          {errors.dateOfBirth && (
+            <Typography
+              variant="caption"
+              color="error"
+              sx={{
+                position: "absolute",
+                bottom: "-18px",
+                left: 0,
+              }}
+            >
+              {errors.dateOfBirth.message}
+            </Typography>
+          )}
+        </div>
+
+        <FormControl component="fieldset">
+          <FormLabel id="heard-from-label" component="legend">
             Where did you hear about this event?
           </FormLabel>
-          <RadioGroup
-            row
-            name="heardFrom"
-            value={formData.heardFrom}
-            onChange={handleChange}
-          >
+
+          <RadioGroup row>
             <FormControlLabel
+              {...register("heardFrom")}
               value="social media"
-              control={<Radio required />}
+              control={<Radio />}
               label="Social Media"
             />
             <FormControlLabel
+              {...register("heardFrom")}
               value="friends"
-              control={<Radio required />}
+              control={<Radio />}
               label="Friend"
             />
             <FormControlLabel
+              {...register("heardFrom")}
               value="myself"
-              control={<Radio required />}
+              control={<Radio />}
               label="Found Myself"
             />
           </RadioGroup>
+
+          {errors.heardFrom && (
+            <Typography
+              variant="caption"
+              color="error"
+              sx={{
+                position: "absolute",
+                bottom: "-10px",
+                left: 0,
+              }}
+            >
+              {errors.heardFrom.message}
+            </Typography>
+          )}
         </FormControl>
 
         <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
@@ -164,9 +205,7 @@ const EventRegistrationForm = () => {
             type="submit"
             variant="contained"
             color="primary"
-            sx={{
-              fontSize: "1.3rem",
-            }}
+            sx={{ fontSize: "1.3rem" }}
           >
             Submit
           </Button>

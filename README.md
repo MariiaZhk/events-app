@@ -40,10 +40,11 @@ The **Events Registration App** is a web-based application designed to streamlin
 
 ## Technologies
 
-- **Frontend**: HTML, CSS, JavaScript, React, MUI (Material-UI)
-- **Backend**: Node.js, Express
-- **Database**: MongoDB (NoSQL)
-- **State Management**: Redux
+- **Frontend**: HTML, CSS, JavaScript, React, MUI (Material UI).
+- **Backend**: Node.js, Express.
+- **Database**: MongoDB.
+- **State Management**: Redux.
+- **Form Validation**: Yup, etc.
 
 ## Project Links
 
