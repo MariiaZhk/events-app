@@ -1,5 +1,4 @@
 import { Link as RouterLink } from "react-router-dom";
-import { memo } from "react";
 import {
   Button,
   Card,
@@ -58,4 +57,4 @@ function EventItem({ id, title, description, eventDate, organizer }) {
   );
 }
 
-export default memo(EventItem);
+export default EventItem;

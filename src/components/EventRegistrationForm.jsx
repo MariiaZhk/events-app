@@ -63,7 +63,7 @@ const EventRegistrationForm = () => {
         toast.success("Registration successful!");
         reset();
         setBirthDate(null);
-        navigate("/events");
+        navigate("/:id/participants");
       })
       .catch((error) => {
         console.error("Error adding participant:", error);
