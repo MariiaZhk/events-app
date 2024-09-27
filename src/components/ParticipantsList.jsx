@@ -163,7 +163,7 @@ function ParticipantsList() {
             width: "100%",
             display: "flex",
             justifyContent: "center",
-            mt: 4,
+            mt: 7,
           }}
         >
           <Pagination
