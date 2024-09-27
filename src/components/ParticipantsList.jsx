@@ -87,6 +87,7 @@ function ParticipantsList() {
         {participants.length > 0 && (
           <Box
             sx={{
+              my: 2,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -140,7 +141,7 @@ function ParticipantsList() {
               No participants match your search.
             </Typography>
           ) : (
-            <Grid container spacing={3}>
+            <Grid container spacing={4}>
               {currentParticipants.map((participant) => (
                 <Grid key={participant._id} size={{ xs: 12, md: 4, sm: 6 }}>
                   <ParticipantItem
