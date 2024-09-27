@@ -2,7 +2,7 @@ import { ToastContainer as ReactToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTheme } from "@mui/material/styles";
 
-const ToastContainer = () => {
+function ToastContainer() {
   const theme = useTheme();
 
   return (
@@ -31,6 +31,6 @@ const ToastContainer = () => {
       limit={1}
     />
   );
-};
+}
 
 export default ToastContainer;

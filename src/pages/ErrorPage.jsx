@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Container, Typography, Button, Box } from "@mui/material";
 
-const ErrorPage = () => {
+function ErrorPage() {
   return (
     <Container sx={{ textAlign: "center", paddingTop: "50px" }}>
       <Typography variant="h1" color="error" gutterBottom>
@@ -27,6 +27,6 @@ const ErrorPage = () => {
       </Box>
     </Container>
   );
-};
+}
 
 export default ErrorPage;

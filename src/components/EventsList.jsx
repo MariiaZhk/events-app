@@ -110,7 +110,14 @@ function EventsList() {
         </Typography>
 
         <Box sx={{ mb: 3, textAlign: "center" }}>
-          <FormControl variant="outlined" sx={{ minWidth: 300 }}>
+          <FormControl
+            variant="outlined"
+            sx={{
+              minWidth: { xs: 180, sm: 240, md: 300 },
+              maxWidth: 340,
+              width: "100%",
+            }}
+          >
             <InputLabel>Sort By</InputLabel>
             <Select
               value={sortOption}

@@ -3,11 +3,11 @@ import Grid from "@mui/material/Grid2";
 import ParticipantItem from "./ParticipantsItem";
 import { useState } from "react";
 import Pagination from "@mui/material/Pagination";
+import { useParams, Link as RouterLink } from "react-router-dom";
 import {
   selectEventById,
   selectParticipantsByEventId,
 } from "../redux/selectors";
-import { useParams, Link as RouterLink } from "react-router-dom";
 import {
   Container,
   Typography,
@@ -17,7 +17,7 @@ import {
   TextField,
 } from "@mui/material";
 
-const ParticipantsList = () => {
+function ParticipantsList() {
   const { id } = useParams();
   const event = useSelector((state) => selectEventById(state, id));
   const participants = useSelector((state) =>
@@ -87,21 +87,25 @@ const ParticipantsList = () => {
         {participants.length > 0 && (
           <Box
             sx={{
-              my: 3,
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               marginX: "auto",
-              minWidth: 400,
+              width: "100%",
+              maxWidth: 340,
             }}
           >
             <TextField
               label="Search Participants"
               variant="outlined"
-              fullWidth
               value={searchQuery}
               onChange={handleSearchChange}
               placeholder="Search by name or email"
+              sx={{
+                minWidth: { xs: 180, sm: 220, md: "100%" },
+                maxWidth: "100%",
+                width: "100%",
+              }}
             />
           </Box>
         )}
@@ -136,7 +140,7 @@ const ParticipantsList = () => {
               No participants match your search.
             </Typography>
           ) : (
-            <Grid container spacing={4}>
+            <Grid container spacing={3}>
               {currentParticipants.map((participant) => (
                 <Grid key={participant._id} size={{ xs: 12, md: 4, sm: 6 }}>
                   <ParticipantItem
@@ -171,6 +175,6 @@ const ParticipantsList = () => {
       )}
     </Box>
   );
-};
+}
 
 export default ParticipantsList;

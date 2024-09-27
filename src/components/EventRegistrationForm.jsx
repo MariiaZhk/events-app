@@ -23,7 +23,7 @@ import {
   Box,
 } from "@mui/material";
 
-const EventRegistrationForm = () => {
+function EventRegistrationForm() {
   const { id } = useParams();
   const event = useSelector((state) => selectEventById(state, id));
   const dispatch = useDispatch();
@@ -215,6 +215,6 @@ const EventRegistrationForm = () => {
       </form>
     </Container>
   );
-};
+}
 
 export default EventRegistrationForm;

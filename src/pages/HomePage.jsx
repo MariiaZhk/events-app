@@ -2,7 +2,7 @@ import { Box, Button, Stack, Typography } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import Copyright from "../components/Copyright";
 
-export default function HomePage() {
+function HomePage() {
   return (
     <Box
       sx={{
@@ -62,3 +62,4 @@ export default function HomePage() {
     </Box>
   );
 }
+export default HomePage;

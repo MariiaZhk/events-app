@@ -2,14 +2,14 @@ import { AppBar, Toolbar, Typography, Link, Box } from "@mui/material";
 import Diversity3Icon from "@mui/icons-material/Diversity3";
 import { Link as RouterLink } from "react-router-dom";
 
-export function Header() {
+function Header() {
   return (
     <AppBar position="static">
       <Toolbar>
         <Diversity3Icon sx={{ mr: 2 }} />
         <HeaderLink to="/">
           <Typography variant="h6" color="inherit" noWrap>
-            EvENTER
+            Eventer
           </Typography>
         </HeaderLink>
         <Box sx={{ flexGrow: 1 }}>
@@ -35,3 +35,4 @@ function HeaderLink({ to, children }) {
     </Link>
   );
 }
+export default Header;

@@ -1,8 +1,8 @@
 import { Box, Container } from "@mui/material";
 import { Outlet } from "react-router-dom";
-import { Header } from "./Header";
+import Header from "./Header";
 
-export default function SharedLayout() {
+function SharedLayout() {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <Box sx={{ width: "100%" }}>
@@ -29,3 +29,4 @@ export default function SharedLayout() {
     </Box>
   );
 }
+export default SharedLayout;
