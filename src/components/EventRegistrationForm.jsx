@@ -1,6 +1,6 @@
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectEventById } from "../redux/selectors";
 import { addParticipant } from "../redux/operations";
@@ -28,6 +28,7 @@ const EventRegistrationForm = () => {
   const event = useSelector((state) => selectEventById(state, id));
   const dispatch = useDispatch();
   const [birthDate, setBirthDate] = useState(null);
+  const navigate = useNavigate();
 
   const {
     handleSubmit,
@@ -62,6 +63,7 @@ const EventRegistrationForm = () => {
         toast.success("Registration successful!");
         reset();
         setBirthDate(null);
+        navigate("/events");
       })
       .catch((error) => {
         console.error("Error adding participant:", error);
@@ -164,7 +166,7 @@ const EventRegistrationForm = () => {
             Where did you hear about this event?
           </FormLabel>
 
-          <RadioGroup row>
+          <RadioGroup row aria-labelledby="radio-buttons" defaultValue="">
             <FormControlLabel
               {...register("heardFrom")}
               value="social media"
