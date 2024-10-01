@@ -15,6 +15,9 @@ export const registrationSchema = yup.object().shape({
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
       }
     ),
-  dateOfBirth: yup.string().required("Date of birth is required"),
+  dateOfBirth: yup
+    .date()
+    .required("Date of birth is required")
+    .max(new Date(), "Date must not be in the future"),
   heardFrom: yup.string().required("Please select an option"),
 });

@@ -2,7 +2,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectEventById } from "../redux/selectors";
+import { selectEventById, selectIsLoading } from "../redux/selectors";
 import { addParticipant } from "../redux/operations";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
@@ -21,14 +21,16 @@ import {
   FormLabel,
   FormControl,
   Box,
+  CircularProgress,
 } from "@mui/material";
 
 function EventRegistrationForm() {
   const { id } = useParams();
   const event = useSelector((state) => selectEventById(state, id));
+  const isLoading = useSelector(selectIsLoading);
   const dispatch = useDispatch();
-  const [birthDate, setBirthDate] = useState(null);
   const navigate = useNavigate();
+  const [birthDate, setBirthDate] = useState(null);
 
   const {
     handleSubmit,
@@ -41,14 +43,12 @@ function EventRegistrationForm() {
   });
 
   const handleDateChange = (date) => {
-    if (date) {
+    if (date && dayjs(date).isValid()) {
       setBirthDate(date);
-      setValue("dateOfBirth", date.format("MM-DD-YYYY"), {
-        shouldValidate: true,
-      });
+      setValue("dateOfBirth", date.toDate(), { shouldValidate: true });
     } else {
       setBirthDate(null);
-      setValue("dateOfBirth", "");
+      setValue("dateOfBirth", null);
     }
   };
 
@@ -67,7 +67,7 @@ function EventRegistrationForm() {
       })
       .catch((error) => {
         console.error("Error adding participant:", error);
-        toast.error("Error adding participant.");
+        toast.error("Error adding participant");
       });
   };
 
@@ -207,9 +207,23 @@ function EventRegistrationForm() {
             type="submit"
             variant="contained"
             color="primary"
-            sx={{ fontSize: "1.3rem" }}
+            sx={{
+              fontSize: "1.3rem",
+              width: "150px",
+              height: "56px",
+
+              "&.Mui-disabled": {
+                backgroundColor: "primary.main",
+                color: "background.default",
+              },
+            }}
+            disabled={isLoading}
           >
-            Submit
+            {isLoading ? (
+              <CircularProgress size={40} color="inherit" />
+            ) : (
+              "Submit"
+            )}
           </Button>
         </Box>
       </form>
