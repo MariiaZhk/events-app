@@ -202,15 +202,15 @@ function EventRegistrationForm() {
           )}
         </FormControl>
 
-        <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+        <Box sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
           <Button
             type="submit"
             variant="contained"
             color="primary"
             sx={{
               fontSize: "1.3rem",
-              width: "150px",
-              height: "56px",
+              width: "124px",
+              height: "48px",
 
               "&.Mui-disabled": {
                 backgroundColor: "primary.main",
